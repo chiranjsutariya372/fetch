@@ -16,4 +16,9 @@ routes.post('/add',async(req,res)=>{
     res.json({success:true})
 });
 
+routes.delete('/delet/:id',async(req,res)=>{
+    let delet=await product.findByIdAndDelete(req.params.id); 
+    res.json({success:true,delet})
+});
+
 module.exports  = routes;
