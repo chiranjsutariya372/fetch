@@ -21,4 +21,9 @@ routes.delete('/delet/:id',async(req,res)=>{
     res.json({success:true,delet})
 });
 
+routes.patch('/update/:id',async(req,res)=>{
+    let update=await product.findByIdAndUpdate(req.params.id,req.body); 
+    res.json({success:true,update})
+});
+
 module.exports  = routes;
