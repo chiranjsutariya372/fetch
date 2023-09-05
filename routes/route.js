@@ -1,5 +1,5 @@
 const express = require('express');
-const { home, login, singup, session, loginget, loginpost, homepage, getblog, postblog, blogpage } = require('../controllers/controllers');
+const { home, login, singup, session, loginget, loginpost, homepage, getblog, postblog, blogpage, patchpassword, password } = require('../controllers/controllers');
 const auth = require('../middleware/middleware');
 const passport = require('passport');
 const isAouth = require('../middleware/isAouth');
@@ -15,6 +15,9 @@ users.post('/loginpost',passport.authenticate('local',{failureRedirect:'/loginpa
 users.get('/blog',isAouth,getblog)
 users.post('/blog',postblog)
 users.get('/blogpage',blogpage)
+users.get('/password',isAouth,password)
+users.patch('/patchpassword',patchpassword)
+
 
 // GoogleAuth
 

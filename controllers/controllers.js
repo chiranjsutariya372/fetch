@@ -54,4 +54,21 @@ const blogpage = async (req, res) => {
 
 }
 
-module.exports = { home, login, singup, session, loginget, loginpost, homepage, getblog, postblog, blogpage }
+const password=(req,res)=>{
+    res.render('password')
+}
+const patchpassword= async (req,res)=>{
+    let userpassword=await user.findById(req.user.id)
+
+    if(userpassword.password !== req.body.oldpassword) return res.json({success:false, message:"old password is incorrect"})
+
+    if(req.body.newpassword !== req.body.confirmpassword) return res.json({success:false, message:"new password is incorrect"})
+
+    userpassword.password = req.body.newpassword
+
+    await userpassword.save()
+
+    res.json({success:true})
+}
+
+module.exports = { home, login, singup, session, loginget, loginpost, homepage, getblog, postblog, blogpage, password, patchpassword }
