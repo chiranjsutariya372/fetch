@@ -1,5 +1,5 @@
 const express = require('express');
-const { home, login, singup, session, loginget, loginpost, homepage, getblog, postblog, blogpage, patchpassword, password } = require('../controllers/controllers');
+const { home, login, singup, session, loginget, loginpost, homepage, getblog, postblog, blogpage, patchpassword, password, mail, verifyotp } = require('../controllers/controllers');
 const auth = require('../middleware/middleware');
 const passport = require('passport');
 const isAouth = require('../middleware/isAouth');
@@ -17,6 +17,8 @@ users.post('/blog',postblog)
 users.get('/blogpage',blogpage)
 users.get('/password',isAouth,password)
 users.patch('/patchpassword',patchpassword)
+users.get('/mail',mail)
+users.get('/verify/:otp',verifyotp)
 
 
 // GoogleAuth

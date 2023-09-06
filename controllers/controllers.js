@@ -1,5 +1,6 @@
 const passport = require("passport")
 const user = require("../model/shcema")
+const tranport = require("../config/email")
 
 const homepage = (req, res) => {
     res.render('index')
@@ -62,7 +63,7 @@ const patchpassword= async (req,res)=>{
 
     if(userpassword.password !== req.body.oldpassword) return res.json({success:false, message:"old password is incorrect"})
 
-    if(req.body.newpassword !== req.body.confirmpassword) return res.json({success:false, message:"new password is incorrect"})
+    if(req.body.newpassword !== req.body.confirmpassword    ) return res.json({success:false, message:"new password is incorrect"})
 
     userpassword.password = req.body.newpassword
 
@@ -70,5 +71,32 @@ const patchpassword= async (req,res)=>{
 
     res.json({success:true})
 }
+const otp=Math.floor(Math.random()*10000)
+const mail=(req,res)=>{
+    const sendmail={
+        form:"chiranjsutariya372@gmail.com",
+        to:"chiranjsutariya372@gmail.com",
+        subject:"testing node mail",
+        html:`<a href="localhost:/8080/email/verifyotp/${otp}">${otp}</a>`
+    }
+    tranport.sendMail(sendmail,(err,info)=>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.send("welcome");
+        }
+    })
+}
 
-module.exports = { home, login, singup, session, loginget, loginpost, homepage, getblog, postblog, blogpage, password, patchpassword }
+const verifyotp=async(req, res)=>{
+    if(req.params.otp !==otp.toString()){
+        res.send("otp is not match");
+    }
+    else{
+        res.send("welcome!");
+    }
+}
+
+
+module.exports = { home, login, singup, session, loginget, loginpost, homepage, getblog, postblog, blogpage, password, patchpassword, mail, verifyotp }
